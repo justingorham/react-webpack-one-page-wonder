@@ -3,30 +3,30 @@ import url from 'url';
 
 const cache = {};
 
-
 function addScriptTag(js) {
-  return new Promise((resolve, reject) => {
-    let jsKey = url.resolve(StaticContentUrl(), js.trim());
-    if (cache.hasOwnProperty(jsKey)) {
-      cache[jsKey]++;
-      return resolve();
-    }
-    cache[jsKey] = 1;
-
+  let jsKey = url.resolve(StaticContentUrl(), js.trim());
+  if (cache.hasOwnProperty(jsKey)) {
+    cache[jsKey].count++;
+    return cache[jsKey].promise;
+  }
+  cache[jsKey] = {
+    count:1
+  };
+  cache[jsKey].promise = new Promise((resolve, reject) => {
     let script = document.createElement('script');
     script.setAttribute('src', jsKey);
     script.onload = resolve;
     script.onerror = reject;
     document.body.appendChild(script);
-
   });
+  return cache[jsKey].promise;
 }
 
 function removeScriptTag(js) {
   return new Promise((resolve) => {
     let jsKey = url.resolve(StaticContentUrl(), js.trim());
-    if (!cache.hasOwnProperty(jsKey) || --cache[jsKey] > 0) {
-      return resolve();
+    if (!cache.hasOwnProperty(jsKey) || --cache[jsKey].count > 0) {
+      return cache[jsKey].promise;
     }
 
     delete cache[jsKey];

@@ -4,4 +4,4 @@ export default function(url){
     root = url.slice();
   }
   return root;
-};
+}
