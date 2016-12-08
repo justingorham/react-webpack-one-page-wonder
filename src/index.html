@@ -14,4 +14,14 @@
 </div>
 </body>
 <script src="/bundle.js"></script>
+<script>
+  onePageWonder({
+    baseUrl: "http://localhost:8080",
+    bootstrapUrl: "bootstrap.json"
+  })
+    .then(function(){
+        console.log('success')
+    })
+    .catch(console.error);
+</script>
 </html>

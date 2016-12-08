@@ -16,7 +16,7 @@ export default function ({htmlName, containerElement = 'div'}) {
     return Promise.resolve(<ContainerElement dangerouslySetInnerHTML={createMarkup(htmlCache[htmlName])}/>);
   }
 
-  let fileUrl = `${StaticContentUrl}/${htmlName}`;
+  let fileUrl = `${StaticContentUrl()}/${htmlName}`;
   return FetchWrapper(fileUrl)
     .then(response => response.text())
     .then(body => {

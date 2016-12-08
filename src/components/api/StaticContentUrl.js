@@ -1,6 +1,7 @@
-let url = (window.bundleOpts || {}).contentRoot;
-if(!url){
-  throw new Error('undefined contentRoot in bundleOpts');
-}
-const root = url.slice();
-export default root;
+let root = window.location.origin.slice();
+export default function(url){
+  if(url){
+    root = url.slice();
+  }
+  return root;
+};

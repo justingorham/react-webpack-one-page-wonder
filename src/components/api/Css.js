@@ -6,7 +6,7 @@ const cache = {};
 
 function addCss(css) {
   return new Promise((resolve, reject) => {
-    let cssKey = url.resolve(StaticContentUrl, css.trim());
+    let cssKey = url.resolve(StaticContentUrl(), css.trim());
     if (cache.hasOwnProperty(cssKey)) {
       cache[cssKey]++;
       return resolve();
@@ -24,7 +24,7 @@ function addCss(css) {
 
 function removeCss(css) {
   return new Promise((resolve) => {
-    let cssKey = url.resolve(StaticContentUrl, css.trim());
+    let cssKey = url.resolve(StaticContentUrl(), css.trim());
     if (!cache.hasOwnProperty(cssKey) || --cache[cssKey] > 0) {
       return resolve();
     }

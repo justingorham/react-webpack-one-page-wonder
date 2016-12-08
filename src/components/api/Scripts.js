@@ -6,7 +6,7 @@ const cache = {};
 
 function addScriptTag(js) {
   return new Promise((resolve, reject) => {
-    let jsKey = url.resolve(StaticContentUrl, js.trim());
+    let jsKey = url.resolve(StaticContentUrl(), js.trim());
     if (cache.hasOwnProperty(jsKey)) {
       cache[jsKey]++;
       return resolve();
@@ -24,7 +24,7 @@ function addScriptTag(js) {
 
 function removeScriptTag(js) {
   return new Promise((resolve) => {
-    let jsKey = url.resolve(StaticContentUrl, js.trim());
+    let jsKey = url.resolve(StaticContentUrl(), js.trim());
     if (!cache.hasOwnProperty(jsKey) || --cache[jsKey] > 0) {
       return resolve();
     }

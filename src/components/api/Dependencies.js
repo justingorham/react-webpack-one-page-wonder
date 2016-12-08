@@ -20,7 +20,7 @@ function extension(fileUrl) {
 
 export function add(fileUrl, {dependencies}) {
 
-  let key = url.resolve(StaticContentUrl, fileUrl.trim());
+  let key = url.resolve(StaticContentUrl(), fileUrl.trim());
   let task = Promise.resolve();
   if (dependencies && dependencies.hasOwnProperty(key)) {
     task = Promise.all(dependencies[key].map(j => add(j, {dependencies})));
@@ -34,7 +34,7 @@ export function add(fileUrl, {dependencies}) {
 }
 
 export function remove(fileUrl, {dependencies}){
-  let key = url.resolve(StaticContentUrl, fileUrl.trim());
+  let key = url.resolve(StaticContentUrl(), fileUrl.trim());
   let ext = extension(fileUrl);
   let action = removeFuncs[ext];
   let task = action ? action(key) : Promise.resolve();

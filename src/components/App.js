@@ -20,6 +20,10 @@ class App extends React.Component {
     }
   }
 
+  componentDidMount(){
+    this.props.resolve();
+  }
+
   componentWillUnmount() {
     let {bootstrap} = this.props;
 
@@ -42,7 +46,8 @@ class App extends React.Component {
 }
 
 App.propTypes = {
-  bootstrap: PropTypes.object.isRequired
+  bootstrap: PropTypes.object.isRequired,
+  resolve: PropTypes.func.isRequired
   //myProp: PropTypes.string.isRequired
 };
 

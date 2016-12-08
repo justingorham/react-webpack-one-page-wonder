@@ -2,8 +2,13 @@ import FetchWrapper from './FetchWrapper';
 import StaticContentUrl from './StaticContentUrl';
 import url from 'url';
 
-export default function () {
-  let bootstrapUrl = url.resolve(StaticContentUrl, 'bootstrap.json');
+let mainBootstrap = null;
+
+export default function (bootstrapLocation) {
+  if(mainBootstrap){
+    return Promise.resolve(Object.assign({},mainBootstrap));
+  }
+  let bootstrapUrl = url.resolve(StaticContentUrl(), bootstrapLocation || 'bootstrap.json');
   return FetchWrapper(bootstrapUrl)
     .then(response => response.json())
     .then(json => {
@@ -22,10 +27,11 @@ export default function () {
       if (fixedJson.dependencies) {
         let dMap = {};
         Object.keys(fixedJson.dependencies).forEach(key => {
-          dMap[url.resolve(StaticContentUrl, key)] = fixedJson.dependencies[key].map(d => url.resolve(StaticContentUrl, d));
+          dMap[url.resolve(StaticContentUrl(), key)] = fixedJson.dependencies[key].map(d => url.resolve(StaticContentUrl(), d));
         });
         fixedJson.dependencies = dMap;
       }
-      return fixedJson;
+      mainBootstrap = fixedJson;
+      return Object.assign({}, fixedJson);
     });
 }
