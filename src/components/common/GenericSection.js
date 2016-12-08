@@ -15,16 +15,24 @@ class GenericSection extends React.Component {
   }
 
   componentWillMount(){
-    let{css, dependencies} = this.props;
+    let{css, script, dependencies} = this.props;
     if(css){
       add(css, {dependencies});
+    }
+
+    if(script){
+      add(script, {dependencies});
     }
   }
 
   componentWillUnmount(){
-    let{css, dependencies} = this.props;
+    let{css, script, dependencies} = this.props;
     if(css){
       remove(css, {dependencies});
+    }
+
+    if(script){
+      remove(script, {dependencies});
     }
   }
 
@@ -41,6 +49,7 @@ GenericSection.propTypes = {
   id: PropTypes.string.isRequired,
   html: PropTypes.string.isRequired,
   css: PropTypes.string,
+  script: PropTypes.string,
   dependencies: PropTypes.object
 };
 
