@@ -38,7 +38,7 @@ class GenericSection extends React.Component {
 
   render() {
     return (
-      <div id={this.props.id}>
+      <div id={this.props.id} className={this.props.className}>
         {this.state.content}
       </div>
     );
@@ -47,6 +47,7 @@ class GenericSection extends React.Component {
 
 GenericSection.propTypes = {
   id: PropTypes.string.isRequired,
+  className: PropTypes.string,
   html: PropTypes.string.isRequired,
   css: PropTypes.string,
   script: PropTypes.string,
