@@ -1,12 +1,13 @@
 import React, {PropTypes} from 'react';
-import GenericSection from './common/GenericSection';
+//import GenericSection from './common/GenericSection';
+import factory from './common/GenericSectionFactory';
 import {add, remove} from './api/Dependencies';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     let {bootstrap} = props;
-    let sections = bootstrap.sections.map((s, i) => (<GenericSection key={i} {...s} {...bootstrap}/>));
+    let sections = bootstrap.sections.map((s, i) => factory(bootstrap, s, i));
     this.state = {sections};
   }
 
@@ -20,7 +21,7 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.resolve();
   }
 

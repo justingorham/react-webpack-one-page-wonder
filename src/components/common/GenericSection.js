@@ -37,17 +37,24 @@ class GenericSection extends React.Component {
   }
 
   render() {
+
     return (
-      <div id={this.props.id} className={this.props.className}>
+      <this.props.containerType id={this.props.id} className={this.props.className}>
         {this.state.content}
-      </div>
+      </this.props.containerType>
     );
   }
 }
 
+GenericSection.defaultProps = {
+    containerType: 'div'
+};
+
+
 GenericSection.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
   className: PropTypes.string,
+  containerType: PropTypes.oneOf(['div', 'span']),
   html: PropTypes.string.isRequired,
   css: PropTypes.string,
   script: PropTypes.string,
